@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DON'T PRESS THE RED BUTTON</title>
+  <style>
+    body {
+      background-color: chocolate;
+      font-size: 10px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .btn-layer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .warning-text {
+      color: red;
+      font-weight: bold;
+      font-size: 3rem;
+    }
+
+    .red-btn {
+      width: 20rem;
+      cursor: pointer;
+    }
+
+    .vid-layer-container {
+      display: none;
+    }
+
+    .vid-layer-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="btn-layer-container">
+      <h1 class="warning-text">WARNING! DO NOT PRESS THIS BUTTON</h1>
+      <img src="./red_button.svg" alt="red button" class="red-btn">
+    </div>
+    <div class="vid-layer-container">
+      <div id="video-player"></div>
+    </div>
+  </div>
+
+  <script>
+    const tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('video-player', {
+        height: '390',
+        width: '640',
+        videoId: 'a3Z7zEc7AXQ',
+        playerVars: {
+          'playsinline': 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      event.target.pauseVideo();
+    }
+
+    const redBtn = document.querySelector('.red-btn');
+    const vidLayerContainer = document.querySelector('.vid-layer-container');
+    redBtn.addEventListener('click', () => {
+      vidLayerContainer.style.display = "block";
+      player.playVideo();
+    });
+  </script>
+</body>
+</html>
