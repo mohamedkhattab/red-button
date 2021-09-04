@@ -50,6 +50,15 @@
       height: 100%;
       pointer-events: none;
     }
+
+    .end-btn {
+      position: absolute;
+      left: 45%;
+      bottom: 5%;
+      background-color: chocolate;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
   </style>
 </head>
 <body>
@@ -60,6 +69,7 @@
     </div>
     <div class="vid-layer-container">
       <div id="video-player"></div>
+      <button class="end-btn">END MY SUFFERING!</button>
     </div>
   </div>
 
@@ -91,9 +101,25 @@
 
     const redBtn = document.querySelector('.red-btn');
     const vidLayerContainer = document.querySelector('.vid-layer-container');
+    const endBtn = document.querySelector('.end-btn');
+    let isPlayingVideo = false;
+
     redBtn.addEventListener('click', () => {
       vidLayerContainer.style.display = "block";
       player.playVideo();
+      isPlayingVideo = true;
+    });
+
+    endBtn.addEventListener('click', () => {
+      if (isPlayingVideo) {
+        player.pauseVideo();
+        endBtn.innerText = 'I LOVE TO SUFFER!';
+      } else {
+        player.playVideo();
+        endBtn.innerText = 'END MY SUFFERING!';
+      }
+
+      isPlayingVideo = !isPlayingVideo;
     });
   </script>
 </body>
